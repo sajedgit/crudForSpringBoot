@@ -4,6 +4,9 @@ include("model.php");
 include("controller.php");
 include("repositories.php");
 include("constant.php");
+include("request_dto.php");
+include("response_dto.php");
+include("functions.php");
 
 
 
@@ -20,8 +23,7 @@ $repository_url = "data/src/main/java/".$package_url."/repositories";
 $constant_url = "data/src/main/java/".$package_url."/constants";
 $service_url = "data/src/main/java/".$package_url."/service";
 $i_service_url = "data/src/main/java/".$package_url."/service/IService";
-$request_dto_url = "data/src/main/java/".$package_url."/payload";
-$response_dto_url = "data/src/main/java/".$package_url."/payload";
+$payload_url = "data/src/main/java/".$package_url."/payload";
 
 // Make a MySQL Connection
 mysql_connect("localhost", $user, $pass) or die(mysql_error());
@@ -82,7 +84,7 @@ while ($tables = mysql_fetch_row($result_for_list_table))
 	array_push($arr, $columns);
 	
 	}
-
+	//print_r($arr);die();
 
 	echo "<br/>---".$table_name_to_class=create_table_to_class_name($table_name);
 	echo "<br/>table name---".$table_name;
@@ -102,6 +104,8 @@ while ($tables = mysql_fetch_row($result_for_list_table))
 	create_controller($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name,$author_name);
 	create_repository($repository_name,$model_name,$package_name,$author_name);
 	create_constant($constant_name,$constant_var_name,$model_name,$package_name,$author_name);
+	create_request_dto($arr,$table_name,$request_name,$model_name,$package_name,$author_name);
+	create_response_dto($arr,$table_name,$response_name,$model_name,$package_name,$author_name);
 
 	drop_table($table_name);
 	die();
@@ -210,6 +214,40 @@ function create_constant($constant_name,$constant_var_name,$model_name,$package_
 
 	$file = fopen($constant_url."/".$constant_name.".java","w");
 	$file_data=get_constant_data($constant_name,$constant_var_name,$model_name,$package_name,$author_name);
+	fwrite($file,$file_data);
+	fclose($file);
+}
+
+
+
+function create_request_dto($arr,$table_name,$request_name,$model_name,$package_name,$author_name)
+{
+	global $payload_url;
+	if (!file_exists($payload_url))
+	{
+    mkdir($payload_url, 0777, true);
+	}
+
+
+	$file = fopen($payload_url."/".$request_name.".java","w");
+	$file_data=get_request_dto_data($arr,$table_name,$request_name,$model_name,$package_name,$author_name);
+	fwrite($file,$file_data);
+	fclose($file);
+}
+
+
+
+function create_response_dto($arr,$table_name,$response_name,$model_name,$package_name,$author_name)
+{
+	global $payload_url;
+	if (!file_exists($payload_url))
+	{
+    mkdir($payload_url, 0777, true);
+	}
+
+
+	$file = fopen($payload_url."/".$response_name.".java","w");
+	$file_data=get_response_dto_data($arr,$table_name,$response_name,$model_name,$package_name,$author_name);
 	fwrite($file,$file_data);
 	fclose($file);
 }

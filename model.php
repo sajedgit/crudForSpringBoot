@@ -7,17 +7,20 @@ function get_model_data($arr,$table_name,$model_name,$package_name,$author_name)
 	for($i=1;$i<count($arr);$i++)
 	{
 
-	    if($arr[$i]['data_type'] == "varchar")
-			$str.="private String ".$arr[$i]['column_name'].";\n\t";
+	    if($arr[$i]['data_type'] == "int")
+			$str.="private Long ".dashesToCamelCase($arr[$i]['column_name']).";\n\t";
+
+		elseif($arr[$i]['data_type'] == "varchar")
+			$str.="private String ".dashesToCamelCase($arr[$i]['column_name']).";\n\t";
 
 	    elseif ($arr[$i]['data_type'] == "text")
-			$str.="\n\t@Column(columnDefinition = \"TEXT\") \n\t private String ".$arr[$i]['column_name'].";\n\t";
+			$str.="\n\t@Column(columnDefinition = \"TEXT\") \n\tprivate String ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
 		elseif($arr[$i]['data_type'] == "date" || $arr[$i]['data_type'] == "datetime" || $arr[$i]['data_type'] == "timestamp")
 
-			$str.="\n\t@Column(columnDefinition = \"TIMESTAMP\") \n\t private String ".$arr[$i]['column_name'].";\n\t";
+			$str.="\n\t@Column(columnDefinition = \"TIMESTAMP\") \n\tprivate String ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 		else
-			$str.="private String ".$arr[$i]['column_name'].";\n\t";
+			$str.="private String ".dashesToCamelCase($arr[$i]['column_name']).";\n\t";
 			
 	}
 
