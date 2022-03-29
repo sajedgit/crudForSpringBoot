@@ -13,147 +13,87 @@ return	$new_column_name;
 }
 
 
-function get_controller_data($arr,$table_name,$controller_name,$model_name)
+function get_controller_data($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name)
 {
 
+    $today = date("d M, Y");
+	$model_var = lcfirst($model_name);
+	$request_var = lcfirst($request_name);
 	$page_data = <<<EOF
-<?php
+package $package_name.controller;
 
-namespace App\Http\Controllers;
-use App\Models\\$model_name;
-use Illuminate\Http\Request;
+import $package_name.constants.$constant_name;
+import $package_name.helper.Response;
+import $package_name.model.$model_name;
+import $package_name.payload.$request_name;
+import $package_name.service.BaseService;
+import $package_name.service.IService.$i_service_name;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-class $controller_name extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        \$data = $model_name::orderBy('created_date', 'desc')->paginate(5); 
-        return view('$model_name/index', compact('data'))
-                ->with('i', (request()->input('page', 1) - 1) * 5);
+/**
+ * This controller is to provide all the $model_name relevant api's
+ *
+ * @author Md. Sajed Ahmed
+ * @since $today
+ * @version 1.0
+ */
+@RestController
+@RequestMapping($constant_name.$constant_var_name)
+public class $controller_name extends BaseController<$model_name, $request_name, $response_name>{
+
+    Logger logger = LoggerFactory.getLogger($controller_name.class);
+
+    private final $i_service_name $i_service_var;
+
+    public $controller_name(BaseService<$model_name, $request_name, $response_name> service, $i_service_name $i_service_var) {
+        super(service);
+        this.$i_service_var = $i_service_var;
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * This API will create $model_name.
+     * @author Md. Sajed Ahmed
+     * @param $request_var - $request_var dto
+     * @return Response
+     * @since $today
+     * @version 1.0
      */
-    public function create()
-    {
-        return view('create');
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Operation(summary = "Create $model_name", description = "Create New $model_name into DB")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "$model_name data store into database", content = @Content(array = @ArraySchema(schema = @Schema(implementation = $model_name.class)))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400, 401", description = "Bad Request, could not save $model_name ", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Response.class)))) })
+    @PostMapping(path = $constant_name.CREATE_$constant_var_name, produces = "application/json")
+    public ResponseEntity<Response<$response_name>> create$model_name(@RequestBody $request_name $request_var) {
+            return $i_service_var.create$model_name($request_var);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  \$request
-     * @return \Illuminate\Http\Response
+     * This API will update $model_name.
+     * @author Md. Sajed Ahmed
+     * @param $request_var - $request_var dto
+     * @return Response
+     * @since $today
+     * @version 1.0
      */
-    public function store(Request \$request)
-    {
-        \$request->validate([
-            'first_name'    =>  'required',
-            'last_name'     =>  'required',
-            'image'         =>  'required|image|max:2048'
-        ]);
-
-        \$image = \$request->file('image');
-
-        \$new_name = rand() . '.' . \$image->getClientOriginalExtension();
-        \$image->move(public_path('images'), \$new_name);
-        \$form_data = array(
-            'first_name'       =>   \$request->first_name,
-            'last_name'        =>   \$request->last_name,
-            'image'            =>   \$new_name
-        );
-
-        $model_name::create(\$form_data);
-
-        return redirect('route_url')->with('success', 'Data Added successfully.');
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Operation(summary = "Update $model_name", description = "Update $model_name into DB")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "$model_name data update into database", content = @Content(array = @ArraySchema(schema = @Schema(implementation = $model_name.class)))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400, 401", description = "Bad Request, could not update $model_name ", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Response.class)))) })
+    @PutMapping(path = $constant_name.UPDATE_$constant_var_name, produces = "application/json")
+    public ResponseEntity<Response<$response_name>> update$model_name(@RequestBody $request_name $request_var) {
+            return $i_service_var.update$model_name($request_var);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  \$id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(\$id)
-    {
-        \$data = $model_name::findOrFail(\$id);
-        return view('view', compact('data'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  \$id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(\$id)
-    {
-        \$data = $model_name::findOrFail(\$id);
-        return view('edit', compact('data'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  \$request
-     * @param  int  \$id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request \$request, \$id)
-    {
-        \$image_name = \$request->hidden_image;
-        \$image = \$request->file('image');
-        if(\$image != '')
-        {
-            \$request->validate([
-                'first_name'    =>  'required',
-                'last_name'     =>  'required',
-                'image'         =>  'image|max:2048'
-            ]);
-
-            \$image_name = rand() . '.' . \$image->getClientOriginalExtension();
-            \$image->move(public_path('images'), \$image_name);
-        }
-        else
-        {
-            \$request->validate([
-                'first_name'    =>  'required',
-                'last_name'     =>  'required'
-            ]);
-        }
-
-        \$form_data = array(
-            'first_name'       =>   \$request->first_name,
-            'last_name'        =>   \$request->last_name,
-            'image'            =>   \$image_name
-        );
-  
-        $model_name::whereId(\$id)->update(\$form_data);
-
-        return redirect('route_url')->with('success', 'Data is successfully updated');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  \$id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(\$id)
-    {
-        \$data = $model_name::findOrFail(\$id);
-        \$data->delete();
-
-        return redirect('route_url')->with('success', 'Data is successfully deleted');
-    }
 }
 
 	

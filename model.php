@@ -1,34 +1,54 @@
 <?php
 
-function get_model_data($arr,$table_name,$model_name)
+function get_model_data($arr,$table_name,$model_name,$package_name)
 {
+	$today = date("d M, Y");
     $str="";
 	for($i=1;$i<count($arr);$i++)
 	{
-		if($i==count($arr)-1)
-		  $str.="'".$arr[$i][0]."'";
-	    else
-		  $str.="'".$arr[$i][0]."',";
+
+	    if($arr[$i]['data_type'] == "varchar")
+			$str.="private String ".$arr[$i]['column_name'].";\n\t";
+
+	    elseif ($arr[$i]['data_type'] == "text")
+			$str.="\n\t@Column(columnDefinition = \"TEXT\") \n\t private String ".$arr[$i]['column_name'].";\n\t";
+
+		elseif($arr[$i]['data_type'] == "date" || $arr[$i]['data_type'] == "datetime" || $arr[$i]['data_type'] == "timestamp")
+
+			$str.="\n\t@Column(columnDefinition = \"TIMESTAMP\") \n\t private String ".$arr[$i]['column_name'].";\n\t";
+		else
+			$str.="private String ".$arr[$i]['column_name'].";\n\t";
 			
 	}
+
+
+
+
 	 
 	$page_data = <<<EOF
-<?php 
-/*
-NAME : Sajed Ahmed
-EMAIL ADDRESS: sajedaiub@gmail.com
-*/
+package $package_name.model;
+import lombok.Data;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import javax.persistence.*;
 
-namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+/**
+ * @author Md. Sajed Ahmed
+ * @since $today
+ * @version 1.0
+ *
+ */
+@Data
+@Entity
+@Table(name = "$table_name")
+@EntityListeners(AuditingEntityListener.class)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class $model_name extends AuditModel<Long>{
 
-class $model_name extends Model
-{
-	
-	   protected \$fillable = [
-      $str
-    ];
+    $str
+
 }
 
 	
