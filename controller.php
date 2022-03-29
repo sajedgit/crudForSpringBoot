@@ -13,7 +13,7 @@ return	$new_column_name;
 }
 
 
-function get_controller_data($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name)
+function get_controller_data($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name,$author_name)
 {
 
     $today = date("d M, Y");
@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * This controller is to provide all the $model_name relevant api's
  *
- * @author Md. Sajed Ahmed
+ * @author $author_name
  * @since $today
  * @version 1.0
  */
@@ -60,7 +60,7 @@ public class $controller_name extends BaseController<$model_name, $request_name,
 
     /**
      * This API will create $model_name.
-     * @author Md. Sajed Ahmed
+     * @author $author_name
      * @param $request_var - $request_var dto
      * @return Response
      * @since $today
@@ -78,7 +78,7 @@ public class $controller_name extends BaseController<$model_name, $request_name,
 
     /**
      * This API will update $model_name.
-     * @author Md. Sajed Ahmed
+     * @author $author_name
      * @param $request_var - $request_var dto
      * @return Response
      * @since $today

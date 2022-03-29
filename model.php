@@ -1,6 +1,6 @@
 <?php
 
-function get_model_data($arr,$table_name,$model_name,$package_name)
+function get_model_data($arr,$table_name,$model_name,$package_name,$author_name)
 {
 	$today = date("d M, Y");
     $str="";
@@ -35,7 +35,7 @@ import javax.persistence.*;
 
 
 /**
- * @author Md. Sajed Ahmed
+ * @author $author_name
  * @since $today
  * @version 1.0
  *

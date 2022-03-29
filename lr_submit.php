@@ -2,17 +2,26 @@
 include("singularize.php");
 include("model.php");
 include("controller.php");
-include("view.php");
-include("route.php");
+include("repositories.php");
+include("constant.php");
+
+
 
 $db_name="crudForSpringBoot";
 $user="root";
 $pass="";
 
+$author_name = "Md. Sajed Ahmed";
 $package_name = "com.synesis.mofl.acl";
 $package_url = str_replace(".","/",$package_name);
 $model_url = "data/src/main/java/".$package_url."/model";
 $controller_url = "data/src/main/java/".$package_url."/controller";
+$repository_url = "data/src/main/java/".$package_url."/repositories";
+$constant_url = "data/src/main/java/".$package_url."/constants";
+$service_url = "data/src/main/java/".$package_url."/service";
+$i_service_url = "data/src/main/java/".$package_url."/service/IService";
+$request_dto_url = "data/src/main/java/".$package_url."/payload";
+$response_dto_url = "data/src/main/java/".$package_url."/payload";
 
 // Make a MySQL Connection
 mysql_connect("localhost", $user, $pass) or die(mysql_error());
@@ -89,15 +98,13 @@ while ($tables = mysql_fetch_row($result_for_list_table))
 	echo "<br/>i_service_name---".$i_service_name=get_i_service_name($model_name);
 	echo "<br/>yml_name---".$yml_name=get_yml_name($table_name);
 
-	create_model($arr,$table_name,$model_name,$package_name);
-	drop_table($table_name);
-	create_controller($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name);
-	die();
+	create_model($arr,$table_name,$model_name,$package_name,$author_name);
+	create_controller($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name,$author_name);
+	create_repository($repository_name,$model_name,$package_name,$author_name);
+	create_constant($constant_name,$constant_var_name,$model_name,$package_name,$author_name);
 
-	if($counter < 2)
-	 create_route($arr,$table_name,$controller_name,$model_name);
-    else 
-	 create_route_multiple($arr,$table_name,$controller_name,$model_name);
+	drop_table($table_name);
+	die();
 	
 }
 
@@ -140,7 +147,7 @@ function drop_table($table_name)
 		echo "Table deleted successfully\n";
 }
 
-function create_model($arr,$table_name,$model_name,$package_name)
+function create_model($arr,$table_name,$model_name,$package_name,$author_name)
 {
 	global $model_url;
 
@@ -151,42 +158,14 @@ function create_model($arr,$table_name,$model_name,$package_name)
 
 	
 	$file = fopen($model_url."/".$model_name.".java","w");
-	$file_data=get_model_data($arr,$table_name,$model_name,$package_name);	//	get_model_data function are in include page
+	$file_data=get_model_data($arr,$table_name,$model_name,$package_name,$author_name);	//	get_model_data function are in include page
 	fwrite($file,$file_data);
 	fclose($file);
 
 }
 
 
-
-function create_route($arr,$table_name,$controller_name,$model_name)
-{
- 
- if (!file_exists('data/routes')) 
-	{
-    mkdir('data/routes/', 0777, true);
-	}
-	
-	$file = fopen("data/routes/web.php","w");
-	$file_data=get_route_data($arr,$table_name,$controller_name,$model_name);	
-	fwrite($file,$file_data);
-	fclose($file);
-		
-}
-
-
-function create_route_multiple($arr,$table_name,$controller_name,$model_name)
-{
-
-	$file = fopen("data/routes/web.php","a+");
-	$file_data=get_route_data_multiple($arr,$table_name,$controller_name,$model_name);	
-	fwrite($file,$file_data);
-	fclose($file);
-		
-}
-
-
-function create_controller($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name)
+function create_controller($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name,$author_name)
 {
 	global $controller_url;
 	if (!file_exists($controller_url))
@@ -196,7 +175,41 @@ function create_controller($arr,$table_name,$controller_name,$model_name,$consta
 
 	
 	$file = fopen($controller_url."/".$controller_name.".java","w");
-	$file_data=get_controller_data($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name);	//	get_controller_data function are in include page
+	$file_data=get_controller_data($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name,$author_name);	//	get_controller_data function are in include page
+	fwrite($file,$file_data);
+	fclose($file);
+}
+
+
+
+function create_repository($repository_name,$model_name,$package_name,$author_name)
+{
+	global $repository_url;
+	if (!file_exists($repository_url))
+	{
+    mkdir($repository_url, 0777, true);
+	}
+
+
+	$file = fopen($repository_url."/".$repository_name.".java","w");
+	$file_data=get_repository_data($repository_name,$model_name,$package_name,$author_name);
+	fwrite($file,$file_data);
+	fclose($file);
+}
+
+
+
+function create_constant($constant_name,$constant_var_name,$model_name,$package_name,$author_name)
+{
+	global $constant_url;
+	if (!file_exists($constant_url))
+	{
+    mkdir($constant_url, 0777, true);
+	}
+
+
+	$file = fopen($constant_url."/".$constant_name.".java","w");
+	$file_data=get_constant_data($constant_name,$constant_var_name,$model_name,$package_name,$author_name);
 	fwrite($file,$file_data);
 	fclose($file);
 }
