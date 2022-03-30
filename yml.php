@@ -39,7 +39,7 @@ function get_yml_data($arr,$table_name,$yml_name,$model_name,$author_name)
         //for primary key
         if($arr[$i]['column_key'] == "PRI")
         {
-            $primary_key = "\n                  primaryKey: true";
+            $primary_key = "\n                    primaryKey: true";
         }
         else
         {

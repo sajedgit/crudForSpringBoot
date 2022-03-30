@@ -20,13 +20,14 @@ $pass="";
 $author_name = "Md. Sajed Ahmed";
 $package_name = "com.synesis.mofl.acl";
 $package_url = str_replace(".","/",$package_name);
-$model_url = "data/src/main/java/".$package_url."/model";
-$controller_url = "data/src/main/java/".$package_url."/controller";
-$repository_url = "data/src/main/java/".$package_url."/repositories";
-$constant_url = "data/src/main/java/".$package_url."/constants";
-$service_url = "data/src/main/java/".$package_url."/service";
-$i_service_url = "data/src/main/java/".$package_url."/service/IService";
-$payload_url = "data/src/main/java/".$package_url."/payload";
+$package_url = "data/src/main/java/".$package_url;
+$model_url = $package_url."/model";
+$controller_url = $package_url."/controller";
+$repository_url = $package_url."/repositories";
+$constant_url = $package_url."/constants";
+$service_url = $package_url."/service";
+$i_service_url = $package_url."/service/IService";
+$payload_url = $package_url."/payload";
 $yml_url = "data/src/main/resources/db.changelog/changes.v1.0/tables";
 
 // Make a MySQL Connection
