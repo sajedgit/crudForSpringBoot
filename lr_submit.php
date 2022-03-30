@@ -8,6 +8,7 @@ include("request_dto.php");
 include("response_dto.php");
 include("service.php");
 include("i_service.php");
+include("yml.php");
 include("functions.php");
 
 
@@ -26,7 +27,7 @@ $constant_url = "data/src/main/java/".$package_url."/constants";
 $service_url = "data/src/main/java/".$package_url."/service";
 $i_service_url = "data/src/main/java/".$package_url."/service/IService";
 $payload_url = "data/src/main/java/".$package_url."/payload";
-$table_url = "data/src/main/resources/db.changelog/changes/v1.0/tables";
+$yml_url = "data/src/main/resources/db.changelog/changes.v1.0/tables";
 
 // Make a MySQL Connection
 mysql_connect("localhost", $user, $pass) or die(mysql_error());
@@ -72,7 +73,8 @@ while ($tables = mysql_fetch_row($result_for_list_table))
 	$query_for_column="DESCRIBE  $table_name";		// find the column name from selected table
 	$result_for_table_column=mysql_query($query_for_column);
 
-	$query_for_column_with_type="select `column_name`,`data_type`,`column_key`, `extra` , `IS_NULLABLE` from information_schema.columns where table_schema = '$db_name' and table_name = '$table_name' ";		// find the column name from selected table
+    $query_for_column_with_type="select `column_name`,`data_type`,`CHARACTER_MAXIMUM_LENGTH` as data_type_length,`column_key`, `extra` , `IS_NULLABLE` from 
+                                information_schema.columns  where table_schema = '$db_name' and table_name = '$table_name' ";   // find the column name from selected table
 	$result_for_table_column_with_type=mysql_query($query_for_column_with_type);
 
 	if (!$result_for_table_column) 
@@ -113,7 +115,7 @@ while ($tables = mysql_fetch_row($result_for_list_table))
 	create_response_dto($arr,$table_name,$response_name,$model_name,$package_name,$author_name);
 	create_i_service($i_service_name,$request_name,$response_name,$model_name,$package_name,$author_name);
 	create_service($service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name);
-	//create_yml($arr,$table_name,$yml_name,$model_name,$author_name);
+	create_yml($arr,$table_name,$yml_name,$model_name,$author_name);
 
 	drop_table($table_name);
 	die();
