@@ -26,6 +26,7 @@ import $package_name.constants.$constant_name;
 import $package_name.helper.Response;
 import $package_name.model.$model_name;
 import $package_name.payload.$request_name;
+import $package_name.payload.$response_name;
 import $package_name.service.BaseService;
 import $package_name.service.IService.$i_service_name;
 import io.swagger.v3.oas.annotations.Operation;

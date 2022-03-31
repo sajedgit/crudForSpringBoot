@@ -127,6 +127,11 @@ databaseChangeLog:
             columns:
               $str
               - column:
+                  name: is_deleted
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
                   name: created_at
                   type: timestamp
                   constraints:

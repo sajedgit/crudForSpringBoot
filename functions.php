@@ -161,14 +161,14 @@ function create_yml($arr,$table_name,$yml_name,$model_name,$author_name)
 
 function create_yml_change_log($table_name,$yml_name)
 {
-    global $yml_url;
-    if (!file_exists($yml_url))
+    global $yml_changelog_url;
+    if (!file_exists($yml_changelog_url))
     {
-        mkdir($yml_url, 0777, true);
+        mkdir($yml_changelog_url, 0777, true);
     }
 
 
-    $file = fopen($yml_url."/db.table-changelog.yml","w");
+    $file = fopen($yml_changelog_url."/db.table-changelog.yml","w");
     $file_data=get_yml_change_log_data($table_name,$yml_name);
     fwrite($file,$file_data);
     fclose($file);

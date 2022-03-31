@@ -28,7 +28,8 @@ $constant_url = $package_url."/constants";
 $service_url = $package_url."/service";
 $i_service_url = $package_url."/service/IService";
 $payload_url = $package_url."/payload";
-$yml_url = "data/src/main/resources/db.changelog/changes.v1.0/tables";
+$yml_url = "data/src/main/resources/db.changelog/changes/v1.0/tables";
+$yml_changelog_url = "data";
 
 // Make a MySQL Connection
 mysql_connect("localhost", $user, $pass) or die(mysql_error());
