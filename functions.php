@@ -159,6 +159,22 @@ function create_yml($arr,$table_name,$yml_name,$model_name,$author_name)
 }
 
 
+function create_yml_change_log($table_name,$yml_name)
+{
+    global $yml_url;
+    if (!file_exists($yml_url))
+    {
+        mkdir($yml_url, 0777, true);
+    }
+
+
+    $file = fopen($yml_url."/db.table-changelog.yml","w");
+    $file_data=get_yml_change_log_data($table_name,$yml_name);
+    fwrite($file,$file_data);
+    fclose($file);
+}
+
+
 function create_service($service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name)
 {
     global $service_url;

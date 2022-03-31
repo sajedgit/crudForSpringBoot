@@ -117,6 +117,7 @@ while ($tables = mysql_fetch_row($result_for_list_table))
 	create_i_service($i_service_name,$request_name,$response_name,$model_name,$package_name,$author_name);
 	create_service($service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name);
 	create_yml($arr,$table_name,$yml_name,$model_name,$author_name);
+	create_yml_change_log($table_name,$yml_name);
 
 	drop_table($table_name);
 	die();

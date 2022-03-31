@@ -1,5 +1,23 @@
 <?php
 
+function get_yml_change_log_data($table_name,$yml_name)
+{
+
+
+    $page_data = <<<EOF
+        - include:
+            file: $table_name.yml
+            relativeToChangelogFile: true
+	
+EOF;
+
+
+
+    return	$page_data;
+}
+
+
+
 function get_yml_data($arr,$table_name,$yml_name,$model_name,$author_name)
 {
     $today = date("d M, Y");
