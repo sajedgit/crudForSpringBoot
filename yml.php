@@ -151,8 +151,6 @@ databaseChangeLog:
                   type: BIGINT
                   constraints:
                     nullable: false
-
-	
 EOF;
 
 
