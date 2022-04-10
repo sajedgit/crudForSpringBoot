@@ -1,6 +1,14 @@
 <?php
 
 
+function spaceRemove($string)
+{
+
+    $str = str_replace(' ', '_',$string);
+    $str = strtolower($str);
+    return $str;
+}
+
 function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
 {
 
@@ -28,16 +36,19 @@ function add_auto_increament($table_name)
 }
 
 
-function drop_table($table_name)
+function drop_table($table_name,$conn)
 {
     $sql = "DROP TABLE $table_name";
-    $retval = mysql_query( $sql );
+    $retval = mysqli_query( $conn,$sql );
     if(! $retval )
     {
         die('Could not delete table: ' . mysql_error());
     }
     else
-        echo "Table deleted successfully\n";
+    {
+        echo "<p class=' text-center text-success' style='margin-top: 100px;'> Create successfully  </p>";
+    }
+
 }
 
 function create_model($arr,$table_name,$model_name,$package_name,$author_name)
