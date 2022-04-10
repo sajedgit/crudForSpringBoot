@@ -10,12 +10,13 @@ include("service.php");
 include("i_service.php");
 include("yml.php");
 include("functions.php");
+include("config.php");
 
 
-
-$db_name="crudForSpringBoot";
-$user="root";
-$pass="";
+$servername = "localhost";
+$dbname="crudForSpringBoot";
+$username="root";
+$password="";
 
 $author_name = "Md. Sajed Ahmed";
 $package_name = "com.synesis.mofl.acl";
@@ -31,14 +32,22 @@ $payload_url = $package_url."/payload";
 $yml_url = "data/src/main/resources/db.changelog/changes/v1.0/tables";
 $yml_changelog_url = "data";
 
-// Make a MySQL Connection
-mysql_connect("localhost", $user, $pass) or die(mysql_error());
-mysql_select_db($db_name) or die(mysql_error());
+//// Make a MySQL Connection
+//mysql_connect("localhost", $username, $password) or die(mysql_error());
+//mysql_select_db($dbname) or die(mysql_error());
 
- $query=$_POST["query"];
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+}
+
+$query=$_POST["query"];
 // Create a MySQL table in the selected database
-$result=mysql_query($query);
-if($result<1)
+$result = mysqli_query($conn, $query);
+if(mysqli_num_rows($result) <1)
 {
 	echo "<br/>Error in table structure ";
 	die();
@@ -47,17 +56,17 @@ if($result<1)
 
 
 $query_for_list_table="show tables from $db_name";		// find the table in the selected database
-$result_for_list_table=mysql_query($query_for_list_table);
+$result_for_list_table = mysqli_query($conn, $query_for_list_table);
 
 if (!$result_for_list_table) {
     echo "DB Error, could not list tables\n";
-    echo 'MySQL Error: ' . mysql_error();
+    echo 'MySQL Error: ' . mysqli_error();
     die();
 }
 $arr=array();
 $table_list=array();
 $counter=0;
-while ($tables = mysql_fetch_row($result_for_list_table)) 
+while ($tables = mysqli_fetch_row($result_for_list_table))
 {
 	$counter++;
     //echo "Table: {$row[0]}\n";
@@ -66,27 +75,27 @@ while ($tables = mysql_fetch_row($result_for_list_table))
 	$table_name=$tables[0];
 
 	$add_primary_key_query = add_primary_key($table_name);
-	mysql_query($add_primary_key_query) or die (mysql_error());
+	mysqli_query($conn,$add_primary_key_query) or die (mysqli_error());
 
 	$add_auto_increament_query = add_auto_increament($table_name);
-	mysql_query($add_auto_increament_query) or die (mysql_error());
+	mysqli_query($conn,$add_auto_increament_query) or die (mysqli_error());
 
 	array_push($table_list, $tables[0]);
 	$query_for_column="DESCRIBE  $table_name";		// find the column name from selected table
-	$result_for_table_column=mysql_query($query_for_column);
+	$result_for_table_column=mysqli_query($conn,$query_for_column);
 
     $query_for_column_with_type="select `column_name`,`data_type`,`CHARACTER_MAXIMUM_LENGTH` as data_type_length,`column_key`, `extra` , `IS_NULLABLE` from 
                                 information_schema.columns  where table_schema = '$db_name' and table_name = '$table_name' ";   // find the column name from selected table
-	$result_for_table_column_with_type=mysql_query($query_for_column_with_type);
+	$result_for_table_column_with_type=mysqli_query($conn,$query_for_column_with_type);
 
 	if (!$result_for_table_column) 
 	{
 	echo "DB Error, could not list columns\n";
-	echo 'MySQL Error: ' . mysql_error();
+	echo 'MySQL Error: ' . mysqli_error();
 	die();
 	}
 
-	while ($columns = mysql_fetch_assoc($result_for_table_column_with_type))
+	while ($columns = mysqli_fetch_assoc($result_for_table_column_with_type))
 	{
 	array_push($arr, $columns);
 	
