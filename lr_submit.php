@@ -15,6 +15,12 @@ include("functions.php");
 include("config.php");
 include("create_zip_file.php");
 
+if(empty($_REQUEST['author_name']) || empty($_REQUEST['package']) || empty($_REQUEST['query']) )
+{
+	echo "<h3 class='text-center text-danger'> Please insert all the information</h3>";
+	die();
+}
+
 echo "<div class='col-sm-9'>";
 
 $query=$_POST["query"];

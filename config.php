@@ -4,11 +4,7 @@ $dbname="crudForSpringBoot";
 $username="root";
 $password="";
 
-if(empty($_REQUEST['author_name']) || empty($_REQUEST['package']) || empty($_REQUEST['query']) )
-{
-    echo "<h3 class='text-center text-danger'> Please insert all the information</h3>";
-    die();
-}
+
 
 $author_name = $_REQUEST['author_name'];
 $user_folder_name = spaceRemove($author_name)."_".time();
