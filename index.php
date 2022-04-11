@@ -27,8 +27,33 @@
             </div>
 
 
+
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+    </div>
+
+    <div class="col-sm-4 col-sm-offset-1" style="margin-top: 155px;">
+
+        <div class="row">
+            <h3 >Sample Query</h3>
+            <pre>
+create table user_profiles
+(
+    id int(11) not null,
+    name varchar(50) not null,
+    description text ,
+    email varchar(50) not null,
+    phone varchar(50),
+    age int(2),
+    joining_date date,
+    dob datetime
+)
+
+            </pre>
+        </div>
+
+
     </div>
 
 
