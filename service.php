@@ -209,7 +209,7 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
     public ResponseEntity<Response<$response_name>> create$model_name($request_name $request_name_var) {
         Response<$response_name> response = new Response();
         try{
-            Long isExists = $repository_name.countAllByIsDeletedFalseAnd$column_concate($param_concate);  
+            Long isExists = $repository_name_var.countAllByIsDeletedFalseAnd$column_concate($param_concate);  
 
             if (isExists == 0) {
                 ModelMapper modelMapper = new ModelMapper();
