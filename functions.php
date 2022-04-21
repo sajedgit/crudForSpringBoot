@@ -21,6 +21,18 @@ function dashesToCamelCase($string, $capitalizeFirstCharacter = false)
     return $str;
 }
 
+function ToCamelCase($string, $capitalizeFirstCharacter = false)
+{
+
+    $str = str_replace('_', '', ucwords($string, '_'));
+
+    if (!$capitalizeFirstCharacter) {
+        $str = ucfirst($str);
+    }
+
+    return $str;
+}
+
 
 function add_primary_key($table_name)
 {
@@ -86,7 +98,7 @@ function create_controller($arr,$table_name,$controller_name,$model_name,$consta
 
 
 
-function create_repository($repository_name,$model_name,$package_name,$author_name)
+function create_repository($arr,$repository_name,$model_name,$package_name,$author_name)
 {
     global $repository_url;
     if (!file_exists($repository_url))
@@ -96,7 +108,7 @@ function create_repository($repository_name,$model_name,$package_name,$author_na
 
 
     $file = fopen($repository_url."/".$repository_name.".java","w");
-    $file_data=get_repository_data($repository_name,$model_name,$package_name,$author_name);
+    $file_data=get_repository_data($arr,$repository_name,$model_name,$package_name,$author_name);
     fwrite($file,$file_data);
     fclose($file);
 }
@@ -186,7 +198,7 @@ function create_yml_change_log($table_name,$yml_name)
 }
 
 
-function create_service($service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name)
+function create_service($arr,$service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name)
 {
     global $service_url;
     if (!file_exists($service_url))
@@ -196,7 +208,7 @@ function create_service($service_name,$request_name,$response_name,$model_name,$
 
 
     $file = fopen($service_url."/".$service_name.".java","w");
-    $file_data=get_service_data($service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name);
+    $file_data=get_service_data($arr,$service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name);
     fwrite($file,$file_data);
     fclose($file);
 }

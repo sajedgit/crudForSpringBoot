@@ -1,9 +1,4 @@
 <?php
-$servername = "localhost";
-$dbname="crudForSpringBoot";
-$username="root";
-$password="";
-
 
 
 $author_name = $_REQUEST['author_name'];

@@ -12,6 +12,7 @@ include("service.php");
 include("i_service.php");
 include("yml.php");
 include("functions.php");
+include("db_config.php");
 include("config.php");
 include("create_zip_file.php");
 
@@ -115,12 +116,12 @@ while ($tables = mysqli_fetch_row($result_for_list_table))
 
 	create_model($arr,$table_name,$model_name,$package_name,$author_name);
 	create_controller($arr,$table_name,$controller_name,$model_name,$constant_name,$request_name,$response_name,$i_service_name,$i_service_var,$package_name,$constant_var_name,$author_name);
-	create_repository($repository_name,$model_name,$package_name,$author_name);
+	create_repository($arr,$repository_name,$model_name,$package_name,$author_name);
 	create_constant($constant_name,$constant_var_name,$model_name,$package_name,$author_name);
 	create_request_dto($arr,$table_name,$request_name,$model_name,$package_name,$author_name);
 	create_response_dto($arr,$table_name,$response_name,$model_name,$package_name,$author_name);
 	create_i_service($i_service_name,$request_name,$response_name,$model_name,$package_name,$author_name);
-	create_service($service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name);
+	create_service($arr,$service_name,$request_name,$response_name,$model_name,$package_name,$author_name,$i_service_name,$repository_name);
 	create_yml($arr,$table_name,$yml_name,$model_name,$author_name);
 	create_yml_change_log($table_name,$yml_name);
 
