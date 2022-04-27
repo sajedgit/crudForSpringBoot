@@ -16,9 +16,25 @@ function get_model_data($arr,$table_name,$model_name,$package_name,$author_name)
 	    elseif ($arr[$i]['data_type'] == "text")
 			$str.="\n\t@Column(columnDefinition = \"TEXT\") \n\tprivate String ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
-		elseif($arr[$i]['data_type'] == "date" || $arr[$i]['data_type'] == "datetime" || $arr[$i]['data_type'] == "timestamp")
+		elseif($arr[$i]['data_type'] == "date" )
 
-			$str.="\n\t@Column(columnDefinition = \"TIMESTAMP\") \n\tprivate String ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+			$str.=" \n\tprivate Date ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+
+		elseif($arr[$i]['data_type'] == "datetime" )
+
+			$str.=" \n\tprivate LocalDate ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+
+		elseif( $arr[$i]['data_type'] == "timestamp")
+
+			$str.="\n\t@Column(columnDefinition = \"TIMESTAMP\") \n\tprivate Date ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+
+		elseif( $arr[$i]['data_type'] == "double")
+
+			$str.="\n\tprivate Double ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+
+		elseif( $arr[$i]['data_type'] == "tinyint"  &&  $arr[$i]['data_type_length']==1)
+
+			$str.="\n\tprivate boolean ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 		else
 			$str.="private String ".dashesToCamelCase($arr[$i]['column_name']).";\n\t";
 			

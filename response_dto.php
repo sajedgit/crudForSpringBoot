@@ -13,8 +13,20 @@ function get_response_dto_data($arr,$table_name,$response_name,$model_name,$pack
 		elseif($arr[$i]['data_type'] == "varchar" || $arr[$i]['data_type'] == "text")
 			$str.="private String ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
-		elseif($arr[$i]['data_type'] == "date" || $arr[$i]['data_type'] == "datetime" || $arr[$i]['data_type'] == "timestamp")
+		elseif($arr[$i]['data_type'] == "date" )
 			$str.="private Date ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+
+		elseif( $arr[$i]['data_type'] == "datetime" )
+			$str.="private LocalDate ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+
+		elseif( $arr[$i]['data_type'] == "timestamp")
+			$str.="private Date ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+
+		elseif( $arr[$i]['data_type'] == "double")
+			$str.="private Double ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
+
+		elseif( $arr[$i]['data_type'] == "tinyint" &&  $arr[$i]['data_type_length']==1)
+			$str.="private boolean ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
 		else
 			$str.="private String ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";

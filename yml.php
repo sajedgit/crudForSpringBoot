@@ -85,7 +85,15 @@ function get_yml_data($arr,$table_name,$yml_name,$model_name,$author_name)
         }
         elseif( $arr[$i]['data_type'] == "datetime" || $arr[$i]['data_type'] == "timestamp")
         {
-            $data_type = "timestamp";
+            $data_type = "TIMESTAMP WITHOUT TIME ZONE";
+        }
+        elseif( $arr[$i]['data_type'] == "double" )
+        {
+            $data_type = "DOUBLE PRECISION";
+        }
+        elseif( $arr[$i]['data_type'] == "tinyint" &&  $arr[$i]['data_type_length']==1)
+        {
+            $data_type = "boolean";
         }
         else
         {
