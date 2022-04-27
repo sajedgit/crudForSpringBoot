@@ -91,7 +91,7 @@ function get_yml_data($arr,$table_name,$yml_name,$model_name,$author_name)
         {
             $data_type = "DOUBLE PRECISION";
         }
-        elseif( $arr[$i]['data_type'] == "tinyint" &&  $arr[$i]['data_type_length']==1)
+        elseif( $arr[$i]['data_type'] == "tinyint" )
         {
             $data_type = "boolean";
         }

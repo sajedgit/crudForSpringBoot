@@ -25,7 +25,7 @@ function get_response_dto_data($arr,$table_name,$response_name,$model_name,$pack
 		elseif( $arr[$i]['data_type'] == "double")
 			$str.="private Double ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
-		elseif( $arr[$i]['data_type'] == "tinyint" &&  $arr[$i]['data_type_length']==1)
+		elseif( $arr[$i]['data_type'] == "tinyint" )
 			$str.="private boolean ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
 		else

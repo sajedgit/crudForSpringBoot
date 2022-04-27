@@ -26,7 +26,7 @@ function get_request_dto_data($arr,$table_name,$request_name,$model_name,$packag
 		elseif( $arr[$i]['data_type'] == "double")
 			$str.="private Double ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
-		elseif( $arr[$i]['data_type'] == "tinyint" &&  $arr[$i]['data_type_length']==1)
+		elseif( $arr[$i]['data_type'] == "tinyint" )
 			$str.="private boolean ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
 

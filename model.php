@@ -32,7 +32,7 @@ function get_model_data($arr,$table_name,$model_name,$package_name,$author_name)
 
 			$str.="\n\tprivate Double ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 
-		elseif( $arr[$i]['data_type'] == "tinyint"  &&  $arr[$i]['data_type_length']==1)
+		elseif( $arr[$i]['data_type'] == "tinyint" )
 
 			$str.="\n\tprivate boolean ".dashesToCamelCase($arr[$i]['column_name']).";\n\n\t";
 		else
