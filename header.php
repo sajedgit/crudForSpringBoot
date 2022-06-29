@@ -51,7 +51,7 @@
                 <?php if( isset($_COOKIE["download_file_src"]) ) { ?>
                    <li><a href="<?php echo $_COOKIE['download_file_src']; ?>">Download Code</a></li>
                 <?php } ?>
-                <li><a href="#section3">Help</a></li>
+                <li><a href="clean_system.php">Clean System</a></li>
             </ul>
             <br>
 <!--            <div class="input-group">-->
