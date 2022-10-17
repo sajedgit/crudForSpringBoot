@@ -14,7 +14,7 @@ $constant_url = $package_url."/constants";
 $service_url = $package_url."/service";
 $i_service_url = $package_url."/service/IService";
 $payload_url = $package_url."/payload";
-$yml_url = $folder_directory."src/main/resources/db.changelog/changes/v1.0/tables";
+$yml_url = $folder_directory."src/main/resources/db.changelog/changes/dev/v1.0/tables";
 $yml_changelog_url = $folder_directory;
 
 
