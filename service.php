@@ -225,7 +225,7 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
                 return new ResponseEntity<>(getSuccessResponse("Created Successfully", response), HttpStatus.OK);
             }
 
-            return new ResponseEntity<>(getErrorResponse("Already Exist!."), HttpStatus.OK);
+            return new ResponseEntity<>(getErrorResponse("Already Exist!."), HttpStatus.CONFLICT);
         } catch(Exception ex){
             logger.error("Could not create $model_name data", ex);
             ex.printStackTrace();
@@ -265,7 +265,7 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
                 response.setObj($response_name_var);
                 return new ResponseEntity<>(getSuccessResponse("Updated Successfully", response), HttpStatus.OK);
             }
-            return new ResponseEntity<>(getErrorResponse("Already Exist!."), HttpStatus.OK);
+            return new ResponseEntity<>(getErrorResponse("Already Exist!."), HttpStatus.CONFLICT);
         } catch(Exception ex){
             logger.error("Could not update $model_name data", ex);
             ex.printStackTrace();
