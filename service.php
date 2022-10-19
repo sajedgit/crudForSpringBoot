@@ -88,7 +88,7 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
     public ResponseEntity<Response<$response_name>> create$model_name($request_name $request_name_var) {
         Response<$response_name> response = new Response();
         try{
-           
+            logger.info("Enter create$model_name service method");
 			ModelMapper modelMapper = new ModelMapper();
 			$model_name $model_name_var = new $model_name();
 			modelMapper.map($request_name_var, $model_name_var);
@@ -105,7 +105,6 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
         } catch(Exception ex){
             logger.error("Could not create $model_name data", ex);
             ex.printStackTrace();
-            System.out.println(ex);
             response.setMessage("$model_name not saved for internal error!");
             response.setSuccess(false);
             response.setErrorMessage(ex.getMessage());
@@ -127,6 +126,7 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
     public ResponseEntity<Response<$response_name>> update$model_name($request_name $request_name_var) {
         Response<$response_name> response = new Response();
         try{
+            logger.info("Enter update$model_name service method");
 			ModelMapper modelMapper = new ModelMapper();
 			$model_name $model_name_var = $repository_name_var.findById($request_name_var.getId()).orElse(null);
 			modelMapper.map($request_name_var, $model_name_var);
@@ -142,7 +142,6 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
         } catch(Exception ex){
             logger.error("Could not update $model_name data", ex);
             ex.printStackTrace();
-            System.out.println(ex);
             response.setMessage("$model_name not updated for internal error!");
             response.setSuccess(false);
             response.setErrorMessage(ex.getMessage());
@@ -209,6 +208,7 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
     public ResponseEntity<Response<$response_name>> create$model_name($request_name $request_name_var) {
         Response<$response_name> response = new Response();
         try{
+            logger.info("Enter create$model_name service method");
             Long isExists = $repository_name_var.countAllByIsDeletedFalseAnd$column_concate($param_concate);  
 
             if (isExists == 0) {
@@ -229,7 +229,6 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
         } catch(Exception ex){
             logger.error("Could not create $model_name data", ex);
             ex.printStackTrace();
-            System.out.println(ex);
             response.setMessage("$model_name not saved for internal error!");
             response.setSuccess(false);
             response.setErrorMessage(ex.getMessage());
@@ -251,6 +250,7 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
     public ResponseEntity<Response<$response_name>> update$model_name($request_name $request_name_var) {
         Response<$response_name> response = new Response();
         try{
+            logger.info("Enter update$model_name service method");
             Long isExists = $repository_name_var.countAllByIsDeletedFalseAnd$column_concate_updata($param_concate, $request_name_var.getId());  
             if (isExists == 0) {
                 ModelMapper modelMapper = new ModelMapper();
@@ -269,7 +269,6 @@ public class $service_name extends BaseService<$model_name, $request_name, $resp
         } catch(Exception ex){
             logger.error("Could not update $model_name data", ex);
             ex.printStackTrace();
-            System.out.println(ex);
             response.setMessage("$model_name not updated for internal error!");
             response.setSuccess(false);
             response.setErrorMessage(ex.getMessage());
