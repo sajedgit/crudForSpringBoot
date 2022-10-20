@@ -1,3 +1,4 @@
+<?php include("visitors_details.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

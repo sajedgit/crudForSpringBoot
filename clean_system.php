@@ -14,11 +14,15 @@ echo "<div class='col-sm-9'>";
 $result = mysqli_query($conn, "SHOW TABLES IN `$dbname`");
 while ($table = mysqli_fetch_array($result)) {
     $tableName = $table[0];
-    $query = "DROP TABLE `$dbname`.`$tableName`";
-    mysqli_query($conn, $query);
+    if($tableName !=="visitor_details")
+    {
+        $query = "DROP TABLE `$dbname`.`$tableName`";
+        mysqli_query($conn, $query);
 
-    if (mysqli_errno($conn)) echo mysqli_errno($conn) . ' ' . mysqli_error($conn);
-    else echo "";
+        if (mysqli_errno($conn)) echo mysqli_errno($conn) . ' ' . mysqli_error($conn);
+        else echo "";
+    }
+
 }
 echo "<h1 class='text-center'>System has cleared</h1> <p class='text-center'> Try again now please</p>";
 echo "</div></div></div>";
